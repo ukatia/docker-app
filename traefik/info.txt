@@ -1,0 +1,9 @@
+Created two backend servers (nginx container) and one Traefik container in the same Docker network zone. I am using traefik.yourdomain.com for.
+
+docker-compose.yml: Docker compose for traefik
+tls.yml: File provider configuration for the load balancer with two servers
+trafik.yml: Traefik configuration
+
+Entry Points refer to listing services and ports.
+CertificatesResolvers is to use an on demand letsencrypt certificate.
+Providers are the file to define routers / middlewares and services

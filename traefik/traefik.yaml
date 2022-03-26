@@ -9,7 +9,7 @@ entryPoints:
 certificatesResolvers:
     myresolver:
         acme:
-            email: admin@yourdomain.com
+            email: admin@epfldomain.com
             storage: acme.json
             httpChallenge:
                 entryPoint: unsecure

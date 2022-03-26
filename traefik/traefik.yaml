@@ -1,0 +1,21 @@
+# Static configuration
+entryPoints:
+    unsecure:
+        address: :80
+    secure:
+        address: :443
+
+# Use on demand letsencrypt certificate         
+certificatesResolvers:
+    myresolver:
+        acme:
+            email: admin@yourdomain.com
+            storage: acme.json
+            httpChallenge:
+                entryPoint: unsecure
+
+# Define routers            
+providers:
+      file:
+      filename: tls.yaml
+      watch: true

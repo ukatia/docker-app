@@ -1,0 +1,56 @@
+# docker-compose.yml
+
+version: "3.7"
+services:
+  traefik:
+    image: traefik:v1.7
+    command: --docker --docker.domain=epfldomain.com
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yaml:/traefik.yaml
+      - ./traefik/tls.yaml:/tls.yaml
+      - ./traefik/acme.json:/acme.json
+    container_name: traefik
+    restart: always
+    networks:
+      - traefik-global-proxy
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports: 
+      - '5432:5432'
+    volumes:
+      - usersapp-db:/var/lib/postgresql/data
+    container_name: postgres
+
+  usersapp:
+    build:
+      context: .
+      dockerfile: ./node-app/usersapp/Dockerfile
+    environment:
+      DB_SCHEMA: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: postgres
+    depends_on:
+      - postgres
+    ports:
+      - '3000:3000'
+    container_name: nodejs
+    networks:
+      - traefik-global-proxy
+        
+volumes:
+  usersapp-db:
+
+networks:
+  traefik-global-proxy:
+    external: false
+    name: traefik-global-proxy
+ 

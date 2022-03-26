@@ -32,7 +32,7 @@ services:
   usersapp:
     build:
       context: .
-      dockerfile: ./node-app/usersapp/Dockerfile
+      dockerfile: ./node-app/Dockerfile
     environment:
       DB_SCHEMA: postgres
       DB_USER: postgres

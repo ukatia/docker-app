@@ -2,10 +2,9 @@ FROM node:12.13.0-alpine
 RUN mkdir -p /opt/app
 WORKDIR /opt/app
 RUN adduser -S app
-COPY package.json /opt/app/package.json
+COPY node-app/usersapp .
 RUN npm install
-COPY . /opt/app
 RUN chown -R app /opt/app
 USER app
 EXPOSE 3000
-CMD [ "npm", "run"]
+CMD [ "npm", "run", "pm2"]
